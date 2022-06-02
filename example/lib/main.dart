@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -97,21 +97,21 @@ class _MyHomePageState extends State<MyHomePage> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
 
   // On destroy stream
-  late StreamSubscription _onDestroy;
+  StreamSubscription _onDestroy;
 
   // On urlChanged stream
-  late StreamSubscription<String> _onUrlChanged;
+  StreamSubscription<String> _onUrlChanged;
 
   // On urlChanged stream
-  late StreamSubscription<WebViewStateChanged> _onStateChanged;
+  StreamSubscription<WebViewStateChanged> _onStateChanged;
 
-  late StreamSubscription<WebViewHttpError> _onHttpError;
+  StreamSubscription<WebViewHttpError> _onHttpError;
 
-  late StreamSubscription<double> _onProgressChanged;
+  StreamSubscription<double> _onProgressChanged;
 
-  late StreamSubscription<double> _onScrollYChanged;
+  StreamSubscription<double> _onScrollYChanged;
 
-  late StreamSubscription<double> _onScrollXChanged;
+  StreamSubscription<double> _onScrollXChanged;
 
   final _urlCtrl = TextEditingController(text: selectedUrl);
 
@@ -135,8 +135,8 @@ class _MyHomePageState extends State<MyHomePage> {
     _onDestroy = flutterWebViewPlugin.onDestroy.listen((_) {
       if (mounted) {
         // Actions like show a info toast.
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Webview Destroyed')));
+        _scaffoldKey.currentState.showSnackBar(
+            const SnackBar(content: const Text('Webview Destroyed')));
       }
     });
 
@@ -226,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(24.0),
               child: TextField(controller: _urlCtrl),
             ),
-            ElevatedButton(
+            RaisedButton(
               onPressed: () {
                 flutterWebViewPlugin.launch(
                   selectedUrl,
@@ -239,19 +239,19 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Open Webview (rect)'),
             ),
-            ElevatedButton(
+            RaisedButton(
               onPressed: () {
                 flutterWebViewPlugin.launch(selectedUrl, hidden: true);
               },
               child: const Text('Open "hidden" Webview'),
             ),
-            ElevatedButton(
+            RaisedButton(
               onPressed: () {
                 flutterWebViewPlugin.launch(selectedUrl);
               },
               child: const Text('Open Fullscreen Webview'),
             ),
-            ElevatedButton(
+            RaisedButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/widget');
               },
@@ -261,11 +261,11 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(24.0),
               child: TextField(controller: _codeCtrl),
             ),
-            ElevatedButton(
+            RaisedButton(
               onPressed: () {
                 final future =
                     flutterWebViewPlugin.evalJavascript(_codeCtrl.text);
-                future.then((String? result) {
+                future.then((String result) {
                   setState(() {
                     _history.add('eval: $result');
                   });
@@ -273,19 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Eval some javascript'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                final future = flutterWebViewPlugin
-                    .evalJavascript('alert("Hello World");');
-                future.then((String? result) {
-                  setState(() {
-                    _history.add('eval: $result');
-                  });
-                });
-              },
-              child: const Text('Eval javascript alert()'),
-            ),
-            ElevatedButton(
+            RaisedButton(
               onPressed: () {
                 setState(() {
                   _history.clear();
@@ -294,7 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Close'),
             ),
-            ElevatedButton(
+            RaisedButton(
               onPressed: () {
                 flutterWebViewPlugin.getCookies().then((m) {
                   setState(() {

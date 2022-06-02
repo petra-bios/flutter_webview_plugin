@@ -1,12 +1,5 @@
 [![Flutter Community: flutter_webview_plugin](https://fluttercommunity.dev/_github/header/flutter_webview_plugin)](https://github.com/fluttercommunity/community)
 
-# NOTICE
-> We are working closely with the Flutter Team to integrate all the Community Plugin features in the [Official WebView Plugin](https://pub.dev/packages/webview_flutter). We will try our best to resolve PRs and Bugfixes, but our priority right now is to merge our two code-bases. Once the merge is complete we will deprecate the Community Plugin in favor of the Official one. 
-> 
-> Thank you for all your support, hopefully you'll also show it for Official Plugin too.
-> 
-> Keep Fluttering!
-
 # Flutter WebView Plugin
 
 [![pub package](https://img.shields.io/pub/v/flutter_webview_plugin.svg)](https://pub.dartlang.org/packages/flutter_webview_plugin)
@@ -179,7 +172,7 @@ Set the `ignoreSSLErrors` option to true to display content from servers with ce
 
 **_Warning:_** Don't use this in production. 
 
-Note that on iOS, you need to add new key to `ios/Runner/Info.plist`
+Note that on iOS you you need to add new key to `ios/Runner/Info.plist`
 
 ```xml
 <key>NSAppTransportSecurity</key>
@@ -194,7 +187,7 @@ Note that on iOS, you need to add new key to `ios/Runner/Info.plist`
 `NSAllowsArbitraryLoadsInWebContent` is for iOS 10+ and `NSAllowsArbitraryLoads` for iOS 9.
 Otherwise you'll still not be able to display content from pages with untrusted certificates.
 
-You can test your ignorance if ssl certificates is working e.g. through https://self-signed.badssl.com/ 
+You can test your ignorance of ssl certificates is working e.g. through https://self-signed.badssl.com/ 
 
 
 

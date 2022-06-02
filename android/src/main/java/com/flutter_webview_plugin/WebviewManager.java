@@ -8,6 +8,7 @@ import android.content.Context;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -227,6 +228,10 @@ class WebviewManager {
                     fileUri = getOutputFilename(MediaStore.ACTION_IMAGE_CAPTURE);
                     takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                     intentList.add(takePhotoIntent);
+                    if (fileChooserParams.isCaptureEnabled()){
+                        activity.startActivityForResult(takePhotoIntent, FILECHOOSER_RESULTCODE);
+                        return true;
+                    }
                 }
                 if (acceptsVideo(acceptTypes)) {
                     Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -252,7 +257,6 @@ class WebviewManager {
                 activity.startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
                 return true;
             }
-
 
             @Override
             public void onProgressChanged(WebView view, int progress) {
